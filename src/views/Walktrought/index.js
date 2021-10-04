@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Dimensions, Button, Touchable, TouchableOpacity, Image } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Dimensions, Button, Touchable, Switch, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withDelay } from 'react-native-reanimated';
-import LottieView from 'lottie-react-native';
+import { LottieViewConnection } from './Component/LottieViewConnection';
+import { ViewConnection } from './Component/ViewConnection';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -16,45 +17,71 @@ export default WalkTrought = () => {
     const offsetConnectionLogo = useSharedValue(width);
     const offsetConnectionButton = useSharedValue(width);
     const [page, setPage] = useState(0);
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
+    var welcome = "Cette application vous permet de trouver des articles de reddit en fonction de vos préférences.\n"
+    welcome += "C'est un projet Epitech du module AppDev qui a été réalisé par des étudiants de l'école."
+
+    var access = "Pour accéder à notre application. Vous allez devoir autoriser nos services lorsque cela vous sera demandé.\n"
+    access += "Notre application a besoin de se connecter aux services de reddit afin de pouvoir récupérer les informations."
 
     const animatedStyles = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offset.value }],
-        };
+        return { transform: [{ translateX: offset.value }] };
     });
 
     const animatedStylesLogo = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offsetLogo.value }],
-        };
+        return { transform: [{ translateX: offsetLogo.value }] };
     });
 
     const animatedStylesText = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offsetText.value }],
-        };
+        return { transform: [{ translateX: offsetText.value }] };
     });
 
     const animatedStylesConnection = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offsetConnection.value }],
-        };
+        return { transform: [{ translateX: offsetConnection.value }] };
     });
 
     const animatedStylesConnectionLogo = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offsetConnectionLogo.value }],
-        };
+        return { transform: [{ translateX: offsetConnectionLogo.value }] };
     });
 
     const animatedStylesConnectionButton = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateX: offsetConnectionButton.value }],
-        };
+        return { transform: [{ translateX: offsetConnectionButton.value }] };
     });
+
+    function functionStyle() {
+        if (page < 1) {
+            offset.value = withSpring(offset.value - width, { damping: 20, stiffness: 90 })
+            offsetLogo.value = withDelay(200, withSpring(offsetLogo.value - width, { damping: 20, stiffness: 90 }));
+            offsetText.value = withDelay(250, withSpring(offsetText.value - width, { damping: 20, stiffness: 90 }));
+            offsetConnection.value = withDelay(300, withSpring(offsetConnection.value - width, { damping: 20, stiffness: 90 }));
+            offsetConnectionLogo.value = withDelay(350, withSpring(offsetConnectionLogo.value - width, { damping: 20, stiffness: 90 }));
+            offsetConnectionButton.value = withDelay(300, withSpring(offsetConnectionButton.value - width, { damping: 20, stiffness: 90 }));
+            setPage(page + 1);
+        } else {
+            offset.value = withSpring(offset.value + width, { damping: 20, stiffness: 90 })
+            offsetLogo.value = withDelay(200, withSpring(offsetLogo.value + width, { damping: 20, stiffness: 90 }));
+            offsetText.value = withDelay(250, withSpring(offsetText.value + width, { damping: 20, stiffness: 90 }));
+            offsetConnection.value = withDelay(300, withSpring(offsetConnection.value + width, { damping: 20, stiffness: 90 }));
+            offsetConnectionLogo.value = withDelay(350, withSpring(offsetConnectionLogo.value + width, { damping: 20, stiffness: 90 }));
+            offsetConnectionButton.value = withDelay(400, withSpring(offsetConnectionButton.value + width, { damping: 20, stiffness: 90 }));
+            setPage(page - 1);
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.switch}>
+                <Switch
+                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                />
+            </View>
             <Animated.View style={[animatedStyles, styles.background]}>
                 <LinearGradient
                     colors={['rgba(106, 247, 135, 0.7)', 'transparent']}
@@ -63,130 +90,29 @@ export default WalkTrought = () => {
                     end={{ x: 2, y: 1 }}
                 />
             </Animated.View>
-            <Animated.View style={[animatedStylesLogo, {marginTop: 50}]}>
-                <LottieView
-                    ref={animation => {
-                        this.animation = animation;
-                    }}
-                    style={{
-                        width: 100,
-                        height: 200,
-                    }}
-                    source={require('../../../assets/reddit.json')}
-                    autoPlay
-                />
+            <Animated.View style={[animatedStylesLogo, { marginTop: 50 }]}>
+                <LottieViewConnection source={require('../../../assets/reddit.json')} width={100} height={200} />
             </Animated.View>
             <Animated.View style={[animatedStylesText]}>
-                <View style={{justifyContent:'center', alignItems: 'center'}}>
-                    <Text style={{fontSize: 25, fontWeight: '400'}}> Bienvenue sur ReddiTech </Text>
-                    <Text style={{textAlign: 'justify', width: width - 70, marginTop: 15, fontWeight: '300', fontSize: 15}}>
-                        Cette application vous permet de trouver des articles de reddit en fonction de vos préférences.
-                        C'est un projet Epitech du module AppDev qui a été réalisé par des étudiants de l'école.
-                    </Text>
-                </View>
+                <ViewConnection Title={'Bienvenue sur ReddiTech'} description={welcome} width={width} />
             </Animated.View>
-            <Animated.View style={[animatedStylesConnectionLogo, {position: 'absolute', top: 150}]}>
-                <LottieView
-                    ref={animation => {
-                        this.animation = animation;
-                    }}
-                    style={{
-                        width: 100,
-                        height: 100,
-                    }}
-                    source={require('../../../assets/connection.json')}
-                    autoPlay
-                />
+            <Animated.View style={[animatedStylesConnectionLogo, { position: 'absolute', top: 150 }]}>
+                <LottieViewConnection source={require('../../../assets/connection.json')} width={100} height={100} />
             </Animated.View>
-            <Animated.View style={[animatedStylesConnection, {position: 'absolute', top: 250}]}>
-                <View style={{justifyContent:'center', alignItems: 'center'}}>
-                    <Text style={{fontSize: 25, fontWeight: '400'}}> Connexion </Text>
-                    <Text style={{textAlign: 'justify', width: width - 70, marginTop: 15, fontWeight: '400', fontSize: 15}}>
-                        Pour accéder à notre application. Vous allez devoir autoriser nos services lorsque cela vous sera demandé.
-                        Notre application a besoin de se connecter aux services de reddit afin de pouvoir récupérer les informations.
-                    </Text>
-                </View>
+            <Animated.View style={[animatedStylesConnection, { position: 'absolute', top: 250 }]}>
+                <ViewConnection Title={'Connexion'} description={access} width={width} />
             </Animated.View>
-            <Animated.View style={[animatedStylesConnectionButton, {position: 'absolute', top: 430, alignItems: 'center', width: width}]}>
-                <TouchableOpacity style={{
-                    backgroundColor: 'white', width: '80%', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center',
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowOpacity: 0.8,
-                    elevation: 1,
-                    shadowRadius: 15 ,
-                    shadowOffset : { width: 1, height: 13 },
-                    flexDirection: 'row',
-                }} activeOpacity={.7}>
-                    <Image source={require('../../../assets/reddit_button.png')} style={{width: 20, height: 20}}/>
-                    <Text style={{fontWeight: '500', fontSize: 17, marginLeft: 5}}>
+            <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
+                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' }]} activeOpacity={.7}>
+                    <Image source={require('../../../assets/reddit_button.png')} style={{ width: 20, height: 20 }} />
+                    <Text style={{ fontWeight: '500', fontSize: 17, marginLeft: 5 }}>
                         Se connecter avec Reddit
                     </Text>
                 </TouchableOpacity>
             </Animated.View>
             <View style={styles.bottomView}>
-                <TouchableOpacity style={{
-                    backgroundColor: 'white', width: '80%', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center',
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowOpacity: 0.8,
-                    elevation: 1,
-                    shadowRadius: 15 ,
-                    shadowOffset : { width: 1, height: 13},
-                }} onPress={() => {
-                    if ( page < 1 ) {
-                        offset.value = withSpring(offset.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        })
-                        offsetLogo.value = withDelay(200, withSpring(offsetLogo.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetText.value = withDelay(250, withSpring(offsetText.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnection.value = withDelay(300, withSpring(offsetConnection.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnectionLogo.value = withDelay(350, withSpring(offsetConnectionLogo.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnectionButton.value = withDelay(300, withSpring(offsetConnectionButton.value - width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        setPage(page + 1);
-                    } else {
-                        offset.value = withSpring(offset.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        })
-                        offsetLogo.value = withDelay(200, withSpring(offsetLogo.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetText.value = withDelay(250, withSpring(offsetText.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnection.value = withDelay(300, withSpring(offsetConnection.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnectionLogo.value = withDelay(350, withSpring(offsetConnectionLogo.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        offsetConnectionButton.value = withDelay(400, withSpring(offsetConnectionButton.value + width, {
-                            damping: 20,
-                            stiffness: 90,
-                        }));
-                        setPage(page - 1);
-                    }
-                }} activeOpacity={.7}>
-                    <Text style={{fontWeight: '500', fontSize: 17}}>
+                <TouchableOpacity style={styles.connectionButton} onPress={() => functionStyle()} activeOpacity={.7}>
+                    <Text style={{ fontWeight: '500', fontSize: 17 }}>
                         {(page === 1) ? 'Précédent' : 'Suivant'}
                     </Text>
                 </TouchableOpacity>
@@ -196,6 +122,14 @@ export default WalkTrought = () => {
 }
 
 const styles = StyleSheet.create({
+    connectionButton: {
+        backgroundColor: 'white', width: '80%', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center',
+        shadowColor: 'rgba(0, 0, 0, 0.1)',
+        shadowOpacity: 0.8,
+        elevation: 1,
+        shadowRadius: 15,
+        shadowOffset: { width: 1, height: 13 },
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -214,5 +148,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         width: '100%',
+    },
+    switch: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
     }
 });

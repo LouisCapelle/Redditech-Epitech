@@ -106,20 +106,10 @@ export default WalkTrought = () => {
                 <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={isEnabled}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' , backgroundColor: isEnabled ? "black": "white"}]} activeOpacity={.7} onPress={() => navigation.navigate('HomeScreen')}>
-                    <Image source={require('../../../assets/reddit_button.png')} style={{ width: 20, height: 20 }} />
-                    <Text style={{ fontWeight: '500', fontSize: 17, marginLeft: 5 , color: isEnabled ? "white": "black"}}>
-                        Se connecter avec Reddit
-                    </Text>
-                </TouchableOpacity>
+                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} darkMode={isEnabled} onPress={() => navigation.navigate('HomeScreen')}/>
             </Animated.View>
             <View style={styles.bottomView}>
-                <TouchableOpacity style={[styles.connectionButton, {backgroundColor: isEnabled ? "black" : "white"}]} onPress={() => functionStyle()} activeOpacity={.7}>
-                    <Text style={{ fontWeight: '500', fontSize: 17 , color: isEnabled ? "white" : "black"}}>
-                        {(page === 1) ? 'Précédent' : 'Suivant'}
-                    </Text>
-                </TouchableOpacity>
-                <Button darkMode={isEnabled} imageSource={require('../../../assets/reddit_button.png')} isLoading={isEnabled} text="Button Text"/>
+                <Button text={(page === 1) ? 'Précédent' : 'Suivant'} darkMode={isEnabled} onPress={() => functionStyle()}/>
             </View>
         </SafeAreaView>
     )

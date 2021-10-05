@@ -4,7 +4,7 @@ import {TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator} from 'reac
 export default Button = ({isLoading, imageSource, imageStyle, darkMode, text, ...props}) => {
 
     return (
-        <TouchableOpacity {...props} style={[styles.button, {backgroundColor: (darkMode) ? "black" : "white"}]}>
+        <TouchableOpacity {...props} style={[styles.button, {backgroundColor: (darkMode) ? "black" : "white"}]} activeOpacity={.7}>
             { (imageSource) &&
                 <Image source={imageSource} style={[styles.image, (imageStyle) && imageStyle]}/>
             }

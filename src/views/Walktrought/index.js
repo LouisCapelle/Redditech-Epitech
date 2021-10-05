@@ -73,7 +73,16 @@ export default WalkTrought = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <Animated.View style={[animatedStyles, styles.background]}>
+                <LinearGradient
+                    colors={[isEnabled ? 'rgba(0, 0, 0, 0.7)' : 'rgba(106, 247, 135, 0.7)', 'transparent']}
+                    style={styles.background}
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 2, y: 1 }}
+                />
+            </Animated.View>
             <View style={styles.switch}>
+                <Text style={[styles.darkMode, {color: isEnabled ? "white" : "black"}]}>Dark Mode</Text>
                 <Switch
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
                     thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -82,37 +91,29 @@ export default WalkTrought = () => {
                     value={isEnabled}
                 />
             </View>
-            <Animated.View style={[animatedStyles, styles.background]}>
-                <LinearGradient
-                    colors={['rgba(106, 247, 135, 0.7)', 'transparent']}
-                    style={styles.background}
-                    start={{ x: 0, y: 1 }}
-                    end={{ x: 2, y: 1 }}
-                />
-            </Animated.View>
             <Animated.View style={[animatedStylesLogo, { marginTop: 50 }]}>
                 <LottieViewConnection source={require('../../../assets/reddit.json')} width={100} height={200} />
             </Animated.View>
             <Animated.View style={[animatedStylesText]}>
-                <ViewConnection Title={'Bienvenue sur ReddiTech'} description={welcome} width={width} />
+                <ViewConnection Title={'Bienvenue sur ReddiTech'} description={welcome} width={width} isEnabled={isEnabled} />
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionLogo, { position: 'absolute', top: 150 }]}>
                 <LottieViewConnection source={require('../../../assets/connection.json')} width={100} height={100} />
             </Animated.View>
             <Animated.View style={[animatedStylesConnection, { position: 'absolute', top: 250 }]}>
-                <ViewConnection Title={'Connexion'} description={access} width={width} />
+                <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={isEnabled}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' }]} activeOpacity={.7}>
+                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' , backgroundColor: isEnabled ? "black": "white"}]} activeOpacity={.7}>
                     <Image source={require('../../../assets/reddit_button.png')} style={{ width: 20, height: 20 }} />
-                    <Text style={{ fontWeight: '500', fontSize: 17, marginLeft: 5 }}>
+                    <Text style={{ fontWeight: '500', fontSize: 17, marginLeft: 5 , color: isEnabled ? "white": "black"}}>
                         Se connecter avec Reddit
                     </Text>
                 </TouchableOpacity>
             </Animated.View>
             <View style={styles.bottomView}>
-                <TouchableOpacity style={styles.connectionButton} onPress={() => functionStyle()} activeOpacity={.7}>
-                    <Text style={{ fontWeight: '500', fontSize: 17 }}>
+                <TouchableOpacity style={[styles.connectionButton, {backgroundColor: isEnabled ? "black" : "white"}]} onPress={() => functionStyle()} activeOpacity={.7}>
+                    <Text style={{ fontWeight: '500', fontSize: 17 , color: isEnabled ? "white" : "black"}}>
                         {(page === 1) ? 'Précédent' : 'Suivant'}
                     </Text>
                 </TouchableOpacity>
@@ -123,7 +124,12 @@ export default WalkTrought = () => {
 
 const styles = StyleSheet.create({
     connectionButton: {
-        backgroundColor: 'white', width: '80%', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center',
+        backgroundColor: 'white',
+        width: '80%',
+        height: 40,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
         shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOpacity: 0.8,
         elevation: 1,
@@ -150,8 +156,16 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     switch: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        flexDirection: 'row',
+        alignSelf: 'flex-end',
+        marginRight: 10,
+        justifyContent: "flex-start"
+    },
+    darkMode: {
+        fontSize: 14,
+        fontWeight: '500',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        marginRight: 10,
     }
 });

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Dimensions, Button, Touchable, Switch, TouchableOpacity, Image } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Dimensions, Touchable, Switch, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withDelay } from 'react-native-reanimated';
 import { LottieViewConnection } from './Component/LottieViewConnection';
 import { ViewConnection } from './Component/ViewConnection';
+import { useNavigation } from '@react-navigation/native';
+import styles from './index.styles';
+import Button from '../../components/Button';
 
 const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-let pages = width * 2;
 
 export default WalkTrought = () => {
     const offset = useSharedValue(0);
@@ -19,6 +20,7 @@ export default WalkTrought = () => {
     const [page, setPage] = useState(0);
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const navigation = useNavigation()
 
 
     var welcome = "Cette application vous permet de trouver des articles de reddit en fonction de vos préférences.\n"
@@ -104,7 +106,7 @@ export default WalkTrought = () => {
                 <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={isEnabled}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' , backgroundColor: isEnabled ? "black": "white"}]} activeOpacity={.7}>
+                <TouchableOpacity style={[styles.connectionButton, { flexDirection: 'row' , backgroundColor: isEnabled ? "black": "white"}]} activeOpacity={.7} onPress={() => navigation.navigate('HomeScreen')}>
                     <Image source={require('../../../assets/reddit_button.png')} style={{ width: 20, height: 20 }} />
                     <Text style={{ fontWeight: '500', fontSize: 17, marginLeft: 5 , color: isEnabled ? "white": "black"}}>
                         Se connecter avec Reddit
@@ -117,55 +119,8 @@ export default WalkTrought = () => {
                         {(page === 1) ? 'Précédent' : 'Suivant'}
                     </Text>
                 </TouchableOpacity>
+                <Button darkMode={isEnabled} imageSource={require('../../../assets/reddit_button.png')} isLoading={isEnabled} text="Button Text"/>
             </View>
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    connectionButton: {
-        backgroundColor: 'white',
-        width: '80%',
-        height: 40,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'rgba(0, 0, 0, 0.1)',
-        shadowOpacity: 0.8,
-        elevation: 1,
-        shadowRadius: 15,
-        shadowOffset: { width: 1, height: 13 },
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-    },
-    background: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        width: pages,
-        height: height,
-    },
-    bottomView: {
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flex: 1,
-        width: '100%',
-    },
-    switch: {
-        flexDirection: 'row',
-        alignSelf: 'flex-end',
-        marginRight: 10,
-        justifyContent: "flex-start"
-    },
-    darkMode: {
-        fontSize: 14,
-        fontWeight: '500',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        marginRight: 10,
-    }
-});

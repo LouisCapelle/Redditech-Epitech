@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import {TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import AppContext from '../services/Context';
 
-export default Button = ({isLoading, imageSource, imageStyle, darkMode, text, ...props}) => {
+export default Button = ({isLoading, imageSource, imageStyle, text, ...props}) => {
 
     const appContext = useContext(AppContext);
 

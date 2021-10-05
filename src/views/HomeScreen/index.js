@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-import TextField from '../../components/TextField';
+import Header from './Components/Header';
 import { useContext } from 'react';
 
 export default HomeScreen = () => {
@@ -8,7 +8,7 @@ export default HomeScreen = () => {
 
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "white", height: '100%', width: '100%', alignItems: 'center'}}>
-            <TextField iconName="search1" iconSize={18} iconColor="black" placeHolder="Rechercher" />
+            <Header/>
         </SafeAreaView>
     );
 }

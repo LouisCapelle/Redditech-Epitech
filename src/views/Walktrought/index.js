@@ -67,7 +67,7 @@ export default WalkTrought = () => {
             offsetText.value = withDelay(250, withSpring(offsetText.value + width, { damping: 20, stiffness: 90 }));
             offsetConnection.value = withDelay(300, withSpring(offsetConnection.value + width, { damping: 20, stiffness: 90 }));
             offsetConnectionLogo.value = withDelay(350, withSpring(offsetConnectionLogo.value + width, { damping: 20, stiffness: 90 }));
-            offsetConnectionButton.value = withDelay(400, withSpring(offsetConnectionButton.value + width, { damping: 20, stiffness: 90 }));
+            offsetConnectionButton.value = withDelay(300, withSpring(offsetConnectionButton.value + width, { damping: 20, stiffness: 90 }));
             setPage(page - 1);
         }
     }

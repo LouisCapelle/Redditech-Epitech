@@ -35,7 +35,7 @@ export default (props) => {
                 borderTopWidth: 1,
                 borderTopColor: 'black',
             },
-        }} appearance={{ tabBarBackground: appContext.darkMode ? 'grey' : 'white', topPadding: 10, bottomPadding: 5, borderRadius: 10, sdotCornerRadius: 17}} onN>
+        }} appearance={{ tabBarBackground: appContext.darkMode ? 'grey' : 'white', topPadding: 10, bottomPadding: 5, dotCornerRadius: 17}} onN>
             <Tabs.Screen name="Accueil" component={HomeScreen} options={{
                     tabBarIcon: ({ focused, color, size }) => (
                         <TabBarIcon

@@ -97,7 +97,7 @@ export default WalkTrought = () => {
                 <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={appContext.darkMode}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => navigation.navigate('HomeScreen')}/>
+                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => navigation.navigate('TabBar')}/>
             </Animated.View>
             <View style={styles.bottomView}>
                 <Button text={(page === 1) ? 'Précédent' : 'Suivant'} onPress={() => functionStyle()}/>

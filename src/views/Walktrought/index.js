@@ -7,7 +7,8 @@ import { ViewConnection } from './Component/ViewConnection';
 import { useNavigation } from '@react-navigation/native';
 import styles from './index.styles';
 import Button from '../../components/Button';
-import AppContext from '../../services/Context'
+import AppContext from '../../services/Context';
+import DarkModeSwitcher from '../../components/DarkModeSwitcher';
 
 const width = Dimensions.get('window').width;
 
@@ -82,16 +83,7 @@ export default WalkTrought = () => {
                     end={{ x: 2, y: 1 }}
                 />
             </Animated.View>
-            <View style={styles.switch}>
-                <Text style={[styles.darkMode, {color: appContext.darkMode ? "white" : "black"}]}>Dark Mode</Text>
-                <Switch
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={appContext.darkMode ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => appContext.toggleDarkMode()}
-                    value={appContext.darkMode}
-                />
-            </View>
+            <DarkModeSwitcher />
             <Animated.View style={[animatedStylesLogo, { marginTop: 50 }]}>
                 <LottieViewConnection source={require('../../../assets/reddit.json')} width={100} height={200} />
             </Animated.View>

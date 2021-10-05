@@ -7,6 +7,7 @@ import { ViewConnection } from './Component/ViewConnection';
 import { useNavigation } from '@react-navigation/native';
 import styles from './index.styles';
 import Button from '../../components/Button';
+import AppContext from '../../services/Context'
 
 const width = Dimensions.get('window').width;
 
@@ -18,10 +19,8 @@ export default WalkTrought = () => {
     const offsetConnectionLogo = useSharedValue(width);
     const offsetConnectionButton = useSharedValue(width);
     const [page, setPage] = useState(0);
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    const navigation = useNavigation()
-
+    const navigation = useNavigation();
+    const appContext = React.useContext(AppContext);
 
     var welcome = "Cette application vous permet de trouver des articles de reddit en fonction de vos préférences.\n"
     welcome += "C'est un projet Epitech du module AppDev qui a été réalisé par des étudiants de l'école."
@@ -77,39 +76,39 @@ export default WalkTrought = () => {
         <SafeAreaView style={styles.container}>
             <Animated.View style={[animatedStyles, styles.background]}>
                 <LinearGradient
-                    colors={[isEnabled ? 'rgba(0, 0, 0, 0.7)' : 'rgba(106, 247, 135, 0.7)', 'transparent']}
+                    colors={[appContext.darkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(106, 247, 135, 0.7)', 'transparent']}
                     style={styles.background}
                     start={{ x: 0, y: 1 }}
                     end={{ x: 2, y: 1 }}
                 />
             </Animated.View>
             <View style={styles.switch}>
-                <Text style={[styles.darkMode, {color: isEnabled ? "white" : "black"}]}>Dark Mode</Text>
+                <Text style={[styles.darkMode, {color: appContext.darkMode ? "white" : "black"}]}>Dark Mode</Text>
                 <Switch
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                    thumbColor={appContext.darkMode ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
+                    onValueChange={() => appContext.toggleDarkMode()}
+                    value={appContext.darkMode}
                 />
             </View>
             <Animated.View style={[animatedStylesLogo, { marginTop: 50 }]}>
                 <LottieViewConnection source={require('../../../assets/reddit.json')} width={100} height={200} />
             </Animated.View>
             <Animated.View style={[animatedStylesText]}>
-                <ViewConnection Title={'Bienvenue sur ReddiTech'} description={welcome} width={width} isEnabled={isEnabled} />
+                <ViewConnection Title={'Bienvenue sur ReddiTech'} description={welcome} width={width} isEnabled={appContext.darkMode} />
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionLogo, { position: 'absolute', top: 150 }]}>
                 <LottieViewConnection source={require('../../../assets/connection.json')} width={100} height={100} />
             </Animated.View>
             <Animated.View style={[animatedStylesConnection, { position: 'absolute', top: 250 }]}>
-                <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={isEnabled}/>
+                <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={appContext.darkMode}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} darkMode={isEnabled} onPress={() => navigation.navigate('HomeScreen')}/>
+                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => navigation.navigate('HomeScreen')}/>
             </Animated.View>
             <View style={styles.bottomView}>
-                <Button text={(page === 1) ? 'Précédent' : 'Suivant'} darkMode={isEnabled} onPress={() => functionStyle()}/>
+                <Button text={(page === 1) ? 'Précédent' : 'Suivant'} onPress={() => functionStyle()}/>
             </View>
         </SafeAreaView>
     )

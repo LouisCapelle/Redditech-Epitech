@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {TouchableOpacity, Image, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import AppContext from '../services/Context';
 
 export default Button = ({isLoading, imageSource, imageStyle, darkMode, text, ...props}) => {
 
+    const appContext = useContext(AppContext);
+
     return (
-        <TouchableOpacity {...props} style={[styles.button, {backgroundColor: (darkMode) ? "black" : "white"}]} activeOpacity={.7}>
+        <TouchableOpacity {...props} style={[styles.button, {backgroundColor: (appContext.darkMode) ? "black" : "white"}]} activeOpacity={.7}>
             { (imageSource) &&
                 <Image source={imageSource} style={[styles.image, (imageStyle) && imageStyle]}/>
             }
-            <Text style={[styles.text, {color: (darkMode) ? "white" : "black"}]}> {text} </Text>
+            <Text style={[styles.text, {color: (appContext.darkMode) ? "white" : "black"}]}> {text} </Text>
             { (isLoading) &&
-                <ActivityIndicator size="small" color={(darkMode) ? "white" : "black"}/>
+                <ActivityIndicator size="small" color={(appContext.darkMode) ? "white" : "black"}/>
             }
         </TouchableOpacity>
     )

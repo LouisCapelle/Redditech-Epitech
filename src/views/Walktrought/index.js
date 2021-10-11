@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Dimensions, Touchable, Switch, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withDelay } from 'react-native-reanimated';
 import { LottieViewConnection } from './Component/LottieViewConnection';
 import { ViewConnection } from './Component/ViewConnection';
 import { useNavigation } from '@react-navigation/native';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import styles from './index.styles';
 import Button from '../../components/Button';
 import AppContext from '../../services/Context';
 import DarkModeSwitcher from '../../components/DarkModeSwitcher';
+import { storeApiToken } from '../../services/Auth';
+
 
 const width = Dimensions.get('window').width;
+
+WebBrowser.maybeCompleteAuthSession();
+
+const discovery = {
+    authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
+    tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
+};
 
 export default WalkTrought = () => {
     const offset = useSharedValue(0);
@@ -22,6 +33,17 @@ export default WalkTrought = () => {
     const [page, setPage] = useState(0);
     const navigation = useNavigation();
     const appContext = React.useContext(AppContext);
+    const [request, response, promptAsync] = useAuthRequest(
+        {
+          clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
+          scopes: ['identity'],
+          redirectUri: makeRedirectUri({
+            // For usage in bare and standalone
+            native: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80',
+          }),
+        },
+        discovery
+    );
 
     var welcome = "Cette application vous permet de trouver des articles de reddit en fonction de vos préférences.\n"
     welcome += "C'est un projet Epitech du module AppDev qui a été réalisé par des étudiants de l'école."
@@ -52,6 +74,15 @@ export default WalkTrought = () => {
     const animatedStylesConnectionButton = useAnimatedStyle(() => {
         return { transform: [{ translateX: offsetConnectionButton.value }] };
     });
+
+    React.useEffect(() => {
+        if (response?.type === 'success') {
+            const { code } = response.params;
+            appContext.setApiToken(code);
+            storeApiToken(code);
+            navigation.navigate('TabBar')
+        }
+    }, [response]);
 
     function functionStyle() {
         if (page < 1) {
@@ -97,7 +128,7 @@ export default WalkTrought = () => {
                 <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={appContext.darkMode}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => navigation.navigate('TabBar')}/>
+                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => promptAsync()} disabled={!request}/>
             </Animated.View>
             <View style={styles.bottomView}>
                 <Button text={(page === 1) ? 'Précédent' : 'Suivant'} onPress={() => functionStyle()}/>

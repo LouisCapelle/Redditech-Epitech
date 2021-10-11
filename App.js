@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AppContext from './src/services/Context';
 import * as Auth from './src/services/Auth';
+import { getApiToken } from './src/services/Auth';
 
 const Stack = createStackNavigator();
 
@@ -13,18 +14,20 @@ export default function App() {
 
   const [darkMode, setDarkMode] = React.useState(false);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [redditApiToken, setRedditApiToken] = React.useState(null);
   const [firstConnection, setFirstConnection] = React.useState(true);
 
   const appObject = {
     darkMode: darkMode,
     toggleDarkMode: () => setDarkMode(!darkMode),
-    redditUser: null
+    redditUser: null,
+    redditApiToken: redditApiToken,
+    setApiToken: (token) => setRedditApiToken(token)
   }
 
   useEffect(() => {
-    Auth.checkUserFirstConnection().then(res => {
-      console.log(res)
-      setFirstConnection(!res);
+    getApiToken().then((apiToken) => {
+      setRedditApiToken(apiToken);
       setIsLoaded(true);
     })
   }, [])
@@ -35,7 +38,9 @@ export default function App() {
         <AppContext.Provider value={appObject}>
           <NavigationContainer>
             <Stack.Navigator>
-              <Stack.Screen name="Walktrought" component={Walktrought} options={{ headerBackVisible: false, headerShown: false }} />
+              { (!redditApiToken) &&
+                <Stack.Screen name="Walktrought" component={Walktrought} options={{ headerBackVisible: false, headerShown: false }} />
+              }
               <Stack.Screen name="TabBar" component={TabBar} options={{
                 gestureEnabled: false, gestureDirection: 'vertical', headerShown: false, cardStyleInterpolator: ({ current, layouts }) => {
                   return {

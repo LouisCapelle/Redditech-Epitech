@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 
 const setUserFirstConnection = async () => {
     try {
@@ -14,4 +15,12 @@ export const checkUserFirstConnection = async () => {
     if (value === null)
         return true
     return value;
+}
+
+export const storeApiToken = async (apiToken) => {
+    return SecureStore.setItemAsync("redditApiToken", apiToken);
+}
+
+export const getApiToken = async () => {
+    return SecureStore.getItemAsync("redditApiToken");
 }

@@ -5,6 +5,7 @@ import TextComponent from '../../components/TextComponent';
 import { useContext } from 'react';
 import Trendings from './Components/Trendings';
 import { ScrollView } from 'react-native-gesture-handler';
+import AppContext from '../../services/Context';
 
 export default HomeScreen = () => {
     const appContext = useContext(AppContext);

@@ -85,7 +85,7 @@ export default WalkTrought = () => {
                 navigation.navigate('TabBar')
             }).catch((error) => {
                 appContext.setApiToken(null);
-                appcontext.setReddittUser(null);
+                appContext.setReddittUser(null);
             });
         }
     }, [response]);

@@ -11,7 +11,7 @@ import styles from './index.styles';
 import Button from '../../components/Button';
 import AppContext from '../../services/Context';
 import DarkModeSwitcher from '../../components/DarkModeSwitcher';
-import { storeApiToken } from '../../services/Auth';
+import { storeApiToken, getUserConnected } from '../../services/Auth';
 
 
 const width = Dimensions.get('window').width;
@@ -79,7 +79,14 @@ export default WalkTrought = () => {
         if (response?.type === 'success') {
             const { access_token } = response.params;
             storeApiToken(access_token);
-            navigation.navigate('TabBar')
+            getUserConnected(apiToken).then((user) => {
+                setRedditUser(user);
+                appContext.setRedditUser(user);
+                navigation.navigate('TabBar')
+            }).catch((error) => {
+                appContext.setApiToken(null);
+                appcontext.setReddittUser(null);
+            });
         }
     }, [response]);
 

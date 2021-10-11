@@ -32,6 +32,10 @@ export default function App() {
       getUserConnected(apiToken).then((user) => {
         setRedditUser(user);
         setIsLoaded(true);
+      }).catch((error) => {
+        setRedditApiToken(null);
+        setRedditUser(null);
+        setIsLoaded(true);
       });
     })
   }, [])

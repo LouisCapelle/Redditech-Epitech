@@ -17,9 +17,10 @@ export default styles = StyleSheet.create({
         'center'
     },
     imageProfile: {
-        height: '80%',
-        width: '80%',
-        alignSelf: 'center' 
+        height: '90%',
+        width: '70%',
+        alignSelf: 'center',
+        borderRadius: 200,
     },
     imageView: {
         backgroundColor: '#bdb1b1',

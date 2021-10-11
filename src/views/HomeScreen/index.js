@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import Header from './Components/Header';
+import TextComponent from '../../components/TextComponent';
 import { useContext } from 'react';
 import Trendings from './Components/Trendings';
 import { ScrollView } from 'react-native-gesture-handler';

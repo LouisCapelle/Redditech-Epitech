@@ -22,6 +22,11 @@ export default styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 200,
     },
+    verticleLine: {
+        height: '100%',
+        width: 1,
+        backgroundColor: 'gray',
+    },
     imageView: {
         backgroundColor: '#bdb1b1',
         borderRadius: 100,

@@ -3,14 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Ima
 import { useContext } from 'react';
 import DarkModeSwitcher from '../../components/DarkModeSwitcher';
 import styles from './styles/index.styles';
+import InformationsView from './Components/Informations';
 
 export default Profile = () => {
 
     const appContext = useContext(AppContext);
-    const [username, setUsername] = React.useState("");
-    const [email, setEmail] = React.useState("");
-
-    console.log(appContext.redditUser)
 
     return (
         <SafeAreaView style={{ backgroundColor: appContext.darkMode ? "grey" : "white", height: '100%' }}>
@@ -21,19 +18,10 @@ export default Profile = () => {
                         <Image source={{uri: appContext.redditUser.snoovatar_img}} style={[styles.imageProfile]} />
                     </View>
                     <View style={{ alignSelf: 'center', paddingTop: 15 }}>
-                        <Text style={[styles.textUser, {color: (appContext.darkMode) ? "white" : "black" }]}> {(appContext.redditUser.name.length > 0) ? appContext.redditUser.name : "Utilisateur Reddit"} </Text>
+                        <Text style={[styles.textUser, {color: (appContext.darkMode) ? "white" : "black" }]}> {(appContext.redditUser.subreddit.display_name_prefixed.length > 0) ? appContext.redditUser.subreddit.display_name_prefixed : "Utilisateur Reddit"} </Text>
                     </View>
                 </View>
-                <View style={{ width: '100%', marginTop: 15, flexDirection: 'row', justifyContent: 'center'}}>
-                    <View style={{alignItems: 'center'}}>
-                        <Text style={{fontSize: 15, fontWeight: '300'}}>Friends</Text>
-                        <Text style={{fontSize: 25}}>{appContext.redditUser.num_friends}</Text>
-                    </View>
-                    <View style={{alignItems: 'center', marginLeft: 15}}>
-                        <Text style={{fontSize: 15, fontWeight: '300'}}>Friends</Text>
-                        <Text style={{fontSize: 25}}>{appContext.redditUser.num_friends}</Text>
-                    </View>
-                </View>
+                <InformationsView/>
             </ScrollView>
         </SafeAreaView>
     );

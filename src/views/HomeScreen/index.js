@@ -9,7 +9,17 @@ import AppContext from '../../services/Context';
 
 export default HomeScreen = () => {
     const appContext = useContext(AppContext);
-
+    const [request, response, promptAsync] = useAuthRequest(
+        {
+            responseType: ResponseType.Token,
+            clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
+            scopes: ['any'],
+            redirectUri: makeRedirectUri({
+                scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
+            }),
+        },
+        discovery
+    );
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%', alignItems: 'center'}}>
             <Header/>

@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AppContext from './src/services/Context';
 import * as Auth from './src/services/Auth';
-import { getApiToken } from './src/services/Auth';
+import { getApiToken, getUserConnected } from './src/services/Auth';
 
 const Stack = createStackNavigator();
 
@@ -15,20 +15,24 @@ export default function App() {
   const [darkMode, setDarkMode] = React.useState(false);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [redditApiToken, setRedditApiToken] = React.useState(null);
-  const [firstConnection, setFirstConnection] = React.useState(true);
+  const [redditUser, setRedditUser] = React.useState(null);
 
   const appObject = {
     darkMode: darkMode,
     toggleDarkMode: () => setDarkMode(!darkMode),
-    redditUser: null,
+    redditUser: redditUser,
     redditApiToken: redditApiToken,
-    setApiToken: (token) => setRedditApiToken(token)
+    setApiToken: (token) => setRedditApiToken(token),
+    setRedditUser: (user) => setRedditUser(user),
   }
 
   useEffect(() => {
     getApiToken().then((apiToken) => {
       setRedditApiToken(apiToken);
-      setIsLoaded(true);
+      getUserConnected(apiToken).then((user) => {
+        setRedditUser(user);
+        setIsLoaded(true);
+      });
     })
   }, [])
 

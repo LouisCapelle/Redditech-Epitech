@@ -6,7 +6,7 @@ import { LottieViewConnection } from './Component/LottieViewConnection';
 import { ViewConnection } from './Component/ViewConnection';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { makeRedirectUri, ResponseType, useAuthRequest } from 'expo-auth-session';
 import styles from './index.styles';
 import Button from '../../components/Button';
 import AppContext from '../../services/Context';
@@ -35,12 +35,12 @@ export default WalkTrought = () => {
     const appContext = React.useContext(AppContext);
     const [request, response, promptAsync] = useAuthRequest(
         {
-          clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
-          scopes: ['identity'],
-          redirectUri: makeRedirectUri({
-            // For usage in bare and standalone
-            native: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80',
-          }),
+            responseType: ResponseType.Token,
+            clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
+            scopes: ['identity'],
+            redirectUri: makeRedirectUri({
+                scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
+            }),
         },
         discovery
     );
@@ -77,9 +77,8 @@ export default WalkTrought = () => {
 
     React.useEffect(() => {
         if (response?.type === 'success') {
-            const { code } = response.params;
-            appContext.setApiToken(code);
-            storeApiToken(code);
+            const { access_token } = response.params;
+            storeApiToken(access_token);
             navigation.navigate('TabBar')
         }
     }, [response]);

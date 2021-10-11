@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
+import { useContext } from 'react';
+import AppContext from './Context';
 
 const setUserFirstConnection = async () => {
     try {
@@ -17,8 +19,18 @@ export const checkUserFirstConnection = async () => {
     return value;
 }
 
+export const getUserConnected = (apiToken) => {
+    return fetch('https://oauth.reddit.com/api/v1/me', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => response.json())
+}
+
 export const storeApiToken = async (apiToken) => {
-    return SecureStore.setItemAsync("redditApiToken", apiToken);
+    SecureStore.setItemAsync("redditApiToken", apiToken);
 }
 
 export const getApiToken = async () => {

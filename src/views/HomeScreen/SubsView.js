@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions, Image } from 'react-native';
 import { useContext } from 'react';
-import Trendings from './Components/Trendings';
-import { ScrollView } from 'react-native-gesture-handler';
+import { AntDesign } from '@expo/vector-icons'; 
 import AppContext from '../../services/Context';
 import { getMySubReddits } from '../../services/SubReddits';
 
@@ -18,21 +17,26 @@ export default SubsView = () => {
 
     renderSubReddit = (subReddit) => {
         return (
-            <View style={{backgroundColor: 'white', width: '97%', alignSelf: 'center', marginTop: 10}}>
-                <Text style={{margin : 10}}>{subReddit.data.display_name_prefixed}</Text>
-            </View>
+            <TouchableOpacity style={{backgroundColor: 'white', width: '97%', alignSelf: 'center', marginTop: 10, borderRadius: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} activeOpacity={.7}>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5}}>
+                    <Image style={{width: 40, height: 40, borderRadius: 100, marginLeft: 8}} source={{uri: subReddit.data.community_icon}}/>
+                    <Text style={{margin : 10}}>{subReddit.data.display_name_prefixed}</Text>
+                </View>
+                <View>
+                    <AntDesign name="arrowright" size={20} color="black" style={{justifyContent: 'flex-end', marginRight: 15}}/>
+                </View>
+            </TouchableOpacity>
         );
     }
 
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%', alignItems: 'center'}}>
-            <ScrollView style={{width: '100%'}}>
-                <FlatList
-                    data={subReddits}
-                    renderItem={({item}) => renderSubReddit(item)}
-                    keyExtractor={(item, index) => index.toString()}
-                />
-            </ScrollView>
+            <FlatList
+                data={subReddits}
+                renderItem={({item}) => renderSubReddit(item)}
+                keyExtractor={(item, index) => index.toString()}
+                style={{width: '100%'}}
+            />
         </SafeAreaView>
     );
 }

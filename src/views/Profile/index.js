@@ -9,8 +9,6 @@ export default Profile = () => {
 
     const appContext = useContext(AppContext);
 
-    console.log(appContext.redditUser)
-
     return (
         <SafeAreaView style={{ backgroundColor: appContext.darkMode ? "grey" : "white", height: '100%' }}>
             <DarkModeSwitcher />

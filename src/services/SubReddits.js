@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 
 export const getMySubReddits = (apiToken) => {
     console.log(apiToken)
-    return fetch('https://oauth.reddit.com/subreddits/mine/subscriber', {
+    return fetch('https://oauth.reddit.com/subreddits/mine/subscriber.json?raw_json=1', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + apiToken,

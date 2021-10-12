@@ -9,6 +9,8 @@ export default Profile = () => {
 
     const appContext = useContext(AppContext);
 
+    console.log(appContext.redditUser)
+
     return (
         <SafeAreaView style={{ backgroundColor: appContext.darkMode ? "grey" : "white", height: '100%' }}>
             <DarkModeSwitcher />
@@ -20,6 +22,7 @@ export default Profile = () => {
                     <View style={{ alignSelf: 'center', paddingTop: 15 }}>
                         <Text style={[styles.textUser, {color: (appContext.darkMode) ? "white" : "black" }]}> {(appContext.redditUser.subreddit.display_name_prefixed.length > 0) ? appContext.redditUser.subreddit.display_name_prefixed : "Utilisateur Reddit"} </Text>
                     </View>
+                    <Text style={{textAlign: 'center', fontWeight: '300', marginTop: 5, color: (appContext.darkMode) ? "white" : "black"}}> {appContext.redditUser.subreddit.public_description}</Text>
                 </View>
                 <InformationsView/>
             </ScrollView>

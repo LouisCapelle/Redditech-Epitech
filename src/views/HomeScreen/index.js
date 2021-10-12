@@ -1,36 +1,64 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions } from 'react-native';
 import Header from './Components/Header';
-import TextComponent from '../../components/TextComponent';
 import { useContext } from 'react';
 import Trendings from './Components/Trendings';
 import { ScrollView } from 'react-native-gesture-handler';
 import AppContext from '../../services/Context';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import SubsView from './SubsView';
 
-export default HomeScreen = () => {
-    const appContext = useContext(AppContext);
-    const [request, response, promptAsync] = useAuthRequest(
-        {
-            responseType: ResponseType.Token,
-            clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
-            scopes: ['any'],
-            redirectUri: makeRedirectUri({
-                scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
-            }),
-        },
-        discovery
-    );
+const SecondRoute = (appContext) => {
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%', alignItems: 'center'}}>
-            <Header/>
             <ScrollView style={{width: '100%'}}>
                 <Trendings/>
                 <Trendings/>
-                <Trendings/>
-                <Trendings/>
-                <Trendings/>
-                <Trendings/>
             </ScrollView>
+        </SafeAreaView>
+    );
+}
+
+const renderScene = SceneMap({
+    first: SecondRoute,
+    second: SecondRoute,
+    subs: SubsView
+});
+
+export default HomeScreen = () => {
+    const appContext = useContext(AppContext);
+    const layout = useWindowDimensions();
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'first', title: 'News' },
+        { key: 'second', title: 'Popular' },
+        { key: 'subs', title: 'Subs' },
+    ]);
+
+    renderTabBar = (props) => (
+        <TabBar {...props}  
+            style={{backgroundColor: appContext.darkMode ? "gray" : "white", height: 40}} 
+            renderLabel={({ route, focused, color }) => (
+                <Text style={{color: appContext.darkMode ? "white" : "black", fontWeight: '500', fontSize: 14, top: -3}}>
+                    {route.title}
+                </Text>
+            )}
+            indicatorStyle={{backgroundColor: '#fa4505', width: 60}}
+            indicatorContainerStyle={{marginLeft: (layout.width / (routes.length * 3) - 8)}}
+        />
+    );
+
+    return (
+        <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%'}}>
+            <Header/>
+            <TabView
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                initialLayout={{ width: layout.width }}
+                style={{marginTop: 10}}
+                renderTabBar={(props) => renderTabBar(props)}
+            />
         </SafeAreaView>
     );
 }

@@ -37,7 +37,7 @@ export default WalkTrought = () => {
         {
             responseType: ResponseType.Token,
             clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
-            scopes: ['identity'],
+            scopes: ['identity', 'mysubreddits'],
             redirectUri: makeRedirectUri({
                 scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
             }),
@@ -79,13 +79,14 @@ export default WalkTrought = () => {
         if (response?.type === 'success') {
             const { access_token } = response.params;
             storeApiToken(access_token);
-            getUserConnected(apiToken).then((user) => {
-                setRedditUser(user);
+            getUserConnected(access_token).then((user) => {
+                appContext.setApiToken(access_token);
                 appContext.setRedditUser(user);
                 navigation.navigate('TabBar')
             }).catch((error) => {
+                console.log(error)
                 appContext.setApiToken(null);
-                appContext.setReddittUser(null);
+                appContext.setRedditUser(null);
             });
         }
     }, [response]);

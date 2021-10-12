@@ -11,3 +11,13 @@ export const getMySubReddits = (apiToken) => {
         }
     }).then((response) => response.json())
 }
+
+export const getPosts = (apiToken) => {
+    return fetch('https://oauth.reddit.com/top.json?raw_json=1', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => response.json())
+}

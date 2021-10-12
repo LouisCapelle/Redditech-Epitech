@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppContext from './src/services/Context';
 import * as Auth from './src/services/Auth';
 import { getApiToken, getUserConnected } from './src/services/Auth';
+import { getMySubReddits } from './src/services/SubReddits';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [redditApiToken, setRedditApiToken] = React.useState(null);
   const [redditUser, setRedditUser] = React.useState(null);
+  const [userSubreddits, setUserSubreddits] = React.useState([]);
 
   const appObject = {
     darkMode: darkMode,
@@ -24,11 +26,16 @@ export default function App() {
     redditApiToken: redditApiToken,
     setApiToken: (token) => setRedditApiToken(token),
     setRedditUser: (user) => setRedditUser(user),
+    userSubreddits: userSubreddits,
+    getUserSubreddits: (redditApiToken) => getMySubReddits(redditApiToken).then((subReddits) => {
+      setUserSubreddits(subReddits.data.children);
+    }),
   }
 
   useEffect(() => {
     getApiToken().then((apiToken) => {
       setRedditApiToken(apiToken);
+      appObject.getUserSubreddits(apiToken);
       getUserConnected(apiToken).then((user) => {
         setRedditUser(user);
         setIsLoaded(true);

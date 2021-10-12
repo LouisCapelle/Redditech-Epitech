@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import AppContext from '../../services/Context';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SubsView from './SubsView';
+import PopularView from './PopularView';
 
 const SecondRoute = (appContext) => {
     return (
@@ -21,7 +22,7 @@ const SecondRoute = (appContext) => {
 
 const renderScene = SceneMap({
     first: SecondRoute,
-    second: SecondRoute,
+    popview: PopularView,
     subs: SubsView
 });
 
@@ -31,7 +32,7 @@ export default HomeScreen = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'first', title: 'News' },
-        { key: 'second', title: 'Popular' },
+        { key: 'popview', title: 'Popular' },
         { key: 'subs', title: 'Subs' },
     ]);
 

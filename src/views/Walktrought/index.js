@@ -37,7 +37,7 @@ export default WalkTrought = () => {
         {
             responseType: ResponseType.Token,
             clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
-            scopes: ['identity', 'mysubreddits'],
+            scopes: ['identity', 'mysubreddits', 'read'],
             redirectUri: makeRedirectUri({
                 scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
             }),

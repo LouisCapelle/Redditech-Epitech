@@ -82,6 +82,7 @@ export default WalkTrought = () => {
             getUserConnected(access_token).then((user) => {
                 appContext.setApiToken(access_token);
                 appContext.setRedditUser(user);
+                appContext.getUserSubreddits(access_token);
                 navigation.navigate('TabBar')
             }).catch((error) => {
                 console.log(error)

@@ -8,22 +8,13 @@ import AppContext from '../../services/Context';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SubsView from './SubsView';
 import PopularView from './PopularView';
-
-const SecondRoute = (appContext) => {
-    return (
-        <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%', alignItems: 'center'}}>
-            <ScrollView style={{width: '100%'}}>
-                <Trendings/>
-                <Trendings/>
-            </ScrollView>
-        </SafeAreaView>
-    );
-}
+import BestView from './BestView';
 
 const renderScene = SceneMap({
-    first: SecondRoute,
+    bestview: BestView,
     popview: PopularView,
-    subs: SubsView
+    new: PopularView,
+    subs: SubsView,
 });
 
 export default HomeScreen = () => {
@@ -31,8 +22,9 @@ export default HomeScreen = () => {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'first', title: 'News' },
+        { key: 'bestview', title: 'Best' },
         { key: 'popview', title: 'Popular' },
+        { key: 'new', title: 'New' },
         { key: 'subs', title: 'Subs' },
     ]);
 
@@ -45,7 +37,7 @@ export default HomeScreen = () => {
                 </Text>
             )}
             indicatorStyle={{backgroundColor: '#fa4505', width: 60}}
-            indicatorContainerStyle={{marginLeft: (layout.width / (routes.length * 3) - 8)}}
+            indicatorContainerStyle={{marginLeft: (layout.width / (routes.length * 3) - 13)}}
         />
     );
 

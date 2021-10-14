@@ -8,6 +8,7 @@ import AppContext from './src/services/Context';
 import * as Auth from './src/services/Auth';
 import { getApiToken, getUserConnected } from './src/services/Auth';
 import { getMySubReddits } from './src/services/SubReddits';
+import SubView from './src/views/SubReddit/SubView';
 
 const Stack = createStackNavigator();
 
@@ -73,6 +74,7 @@ export default function App() {
                 }
               }} />
               <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerBackVisible: false, headerShown: false }} />
+              <Stack.Screen name="SubView" component={SubView} options={{ headerBackVisible: true, headerShown: false }} />
             </Stack.Navigator>
           </NavigationContainer>
         </AppContext.Provider>

@@ -13,7 +13,17 @@ export const getMySubReddits = (apiToken) => {
 }
 
 export const getPosts = (apiToken) => {
-    return fetch('https://oauth.reddit.com/top.json?raw_json=1', {
+    return fetch('https://oauth.reddit.com/hot.json?raw_json=1', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + apiToken,
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => response.json())
+}
+
+export const getPostsBest = (apiToken) => {
+    return fetch('https://oauth.reddit.com/best.json?raw_json=1', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + apiToken,

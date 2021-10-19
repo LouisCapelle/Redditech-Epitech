@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions } from 'react-native';
-import Header from './Components/Header';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions, Image } from 'react-native';
 import { useContext } from 'react';
 import Trendings from './Components/Trendings';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,6 +8,8 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SubsView from './SubsView';
 import PopularView from './PopularView';
 import BestView from './BestView';
+import { Ionicons } from '@expo/vector-icons';
+import TextField from '../../components/TextField';
 
 const renderScene = SceneMap({
     bestview: BestView,
@@ -28,6 +29,20 @@ export default HomeScreen = () => {
         { key: 'subs', title: 'Subs' },
     ]);
 
+    const Header = () => {
+        const myRefCurrent = () => {
+            setIndex(3)
+        }
+    
+        return (
+            <View style={{width: '90%', flexDirection: 'row', alignSelf: 'center'}}>
+                <Image source={require('../../../assets/reddit_button.png')} style={{height: 35, width: 35, alignSelf: 'center', marginRight: 15}}></Image>
+                <TextField onFocus={() => setIndex(3)} iconName="search1" iconSize={18} iconColor="black" placeHolder="Rechercher" width={'100%'} />
+                <Ionicons name="settings-outline" size={35} color="black" style={{marginLeft: 10}}/>
+            </View>
+        );
+    }
+
     renderTabBar = (props) => (
         <TabBar {...props}  
             style={{backgroundColor: appContext.darkMode ? "gray" : "white", height: 40}} 
@@ -43,7 +58,7 @@ export default HomeScreen = () => {
 
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%'}}>
-            <Header/>
+            <Header />
             <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}

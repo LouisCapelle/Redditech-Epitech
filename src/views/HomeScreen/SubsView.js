@@ -3,14 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWi
 import { useContext } from 'react';
 import { AntDesign } from '@expo/vector-icons'; 
 import AppContext from '../../services/Context';
+import { useNavigation } from '@react-navigation/core';
 
 export default SubsView = () => {
     const appContext = useContext(AppContext);
-    const [subReddits, setSubReddits] = React.useState(appContext.userSubreddits);
+    const navigation = useNavigation();
 
     const renderSubReddit = (subReddit) => {
         return (
-            <TouchableOpacity style={{backgroundColor: appContext.darkMode ? '#e0e0e0' : 'white', width: '97%', alignSelf: 'center', marginTop: 10, borderRadius: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} activeOpacity={.7}>
+            <TouchableOpacity style={{backgroundColor: appContext.darkMode ? '#e0e0e0' : 'white', width: '97%', alignSelf: 'center', marginTop: 10, borderRadius: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} activeOpacity={.7} onPress={() => navigation.navigate('SubView', {subReddit: subReddit})}>
                 <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 5, marginBottom: 5}}>
                     { subReddit.data.community_icon !== "" &&
                         <Image style={{width: 40, height: 40, borderRadius: 100, marginLeft: 8}} source={{uri: subReddit.data.community_icon}}/>

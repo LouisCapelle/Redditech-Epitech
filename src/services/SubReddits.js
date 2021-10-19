@@ -31,3 +31,14 @@ export const getPostsBest = (apiToken) => {
         }
     }).then((response) => response.json())
 }
+
+export const getSubReddit = (apiToken, subreddit_name) => {
+    console.log(apiToken)
+    return fetch('https://oauth.reddit.com/r/' + subreddit_name + '/about.json?raw_json=1', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + apiToken
+        }
+    }).then((response) => response.json())
+}

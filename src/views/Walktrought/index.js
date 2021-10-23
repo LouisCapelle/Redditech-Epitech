@@ -13,7 +13,6 @@ import AppContext from '../../services/Context';
 import DarkModeSwitcher from '../../components/DarkModeSwitcher';
 import { storeApiToken, getUserConnected } from '../../services/Auth';
 
-
 const width = Dimensions.get('window').width;
 
 WebBrowser.maybeCompleteAuthSession();

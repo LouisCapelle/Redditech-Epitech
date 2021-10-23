@@ -5,8 +5,9 @@ import { getSubReddit } from '../../services/SubReddits';
 import AppContext from '../../services/Context';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons'; 
 
-const HEADER_HEIGHT = 200;
+const HEADER_HEIGHT = 230;
 
 function padZero(str, len) {
     len = len || 2;
@@ -69,14 +70,20 @@ export default SubView = ({route, navigation, props}) => {
         })
 
         const textPlace = offset.interpolate({
-            inputRange: [0, 0],
-            outputRange: [0, -20],
+            inputRange: [0, 10],
+            outputRange: [10, 5],
             extrapolate: 'clamp'
         })
 
         const textHeight = offset.interpolate({
-            inputRange: [0, 30],
-            outputRange: [30, 0],
+            inputRange: [0, 70],
+            outputRange: [70, 0],
+            extrapolate: 'clamp'
+        })
+
+        const UsersHeight = offset.interpolate({
+            inputRange: [0, 20],
+            outputRange: [20, 0],
             extrapolate: 'clamp'
         })
 
@@ -95,15 +102,26 @@ export default SubView = ({route, navigation, props}) => {
                 }}
             >
                 {(subRedditInfo.banner_background_image) ?
-                    <ImageBackground source={{uri: subRedditInfo.banner_background_image}} style={{width: '100%', height: '100%'}} imageStyle={{opacity: .6, resizeMode: 'cover', borderBottomRightRadius: 10, borderBottomLeftRadius: 10}} >
+                    <ImageBackground source={{uri: subRedditInfo.banner_background_image}} style={{width: '100%', height: '100%'}} imageStyle={{opacity: .2, resizeMode: 'cover'}} >
                         <BackButton navigation={navigation} style={{marginTop: 50, marginLeft: 20}}/>
-                        <View style={{flexDirection: 'row'}}>
-                            <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
-                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 24, color: (subRedditInfo.key_color) ? invertColor(subRedditInfo.key_color) : 'white', fontWeight: '500', marginTop: textPlace}}>
-                                {subRedditInfo.display_name_prefixed}
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
+                                <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 24, color: 'black', fontWeight: '500', marginTop: textPlace}}>
+                                    {subRedditInfo.display_name_prefixed}
+                                </Animated.Text>
+                            </View>
+                            <TouchableOpacity style={{backgroundColor: '#fa4505', borderRadius: 100, width: '20%', height: 30, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginRight: 20}} activeOpacity={.5}>
+                                <AntDesign name="plus" size={15} color="white" />
+                                <Text style={{color: 'white'}}> Join </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection: 'row', width: '90%', alignSelf: 'center'}}>
+                            <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: 'black', }}>
+                                {subRedditInfo.subscribers} members - {subRedditInfo.active_user_count} users active
                             </Animated.Text>
                         </View>
-                        <Animated.Text style={{marginLeft: 5, fontSize: 15, color: (subRedditInfo.key_color) ? invertColor(subRedditInfo.key_color) : 'white', fontWeight: '300', marginTop: textPlace, marginLeft: 20, marginTop: 10, height: textHeight}}>
+                        <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '400', marginTop: textPlace, height: textHeight, width: '90%', justifyContent: 'center', alignSelf: 'center'}}>
                             {subRedditInfo.public_description}
                         </Animated.Text>
                     </ImageBackground>
@@ -114,12 +132,26 @@ export default SubView = ({route, navigation, props}) => {
                             style={[styles.background, {height: '100%', borderBottomLeftRadius: 10, borderBottomRightRadius: 10}]}
                         />
                         <BackButton navigation={navigation} style={{marginTop: 50, marginLeft: 20}}/>
-                        <View style={{flexDirection: 'row'}}>
-                            <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
-                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 24, color: (subRedditInfo.key_color) ? invertColor(subRedditInfo.key_color) : 'white', fontWeight: '500', marginTop: textPlace}}>
-                                {subRedditInfo.display_name_prefixed}
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
+                                <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 24, color: 'black', fontWeight: '500', marginTop: textPlace}}>
+                                    {subRedditInfo.display_name_prefixed}
+                                </Animated.Text>
+                            </View>
+                            <TouchableOpacity style={{backgroundColor: '#fa4505', borderRadius: 100, width: '20%', height: 30, alignSelf: 'center', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginRight: 20}} activeOpacity={.5}>
+                                <AntDesign name="plus" size={15} color="white" />
+                                <Text style={{color: 'white'}}> Join </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flexDirection: 'row', width: '90%', alignSelf: 'center'}}>
+                            <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: 'black', }}>
+                                {subRedditInfo.subscribers} members - {subRedditInfo.active_user_count} users active
                             </Animated.Text>
                         </View>
+                        <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '300', marginTop: textPlace, height: textHeight, width: '90%', justifyContent: 'center', alignSelf: 'center'}}>
+                            {subRedditInfo.public_description}
+                        </Animated.Text>
                     </>
                 }
                 
@@ -133,10 +165,10 @@ export default SubView = ({route, navigation, props}) => {
             <SafeAreaView style={{flex: 1}} forceInset={{ top: 'always' }}>
                 <AnimatedHeader></AnimatedHeader>
                 <ScrollView
-                    style={{ flex: 1, backgroundColor: 'white', zIndex: 1 }}
+                    style={{ flex: 1, backgroundColor: '#f6f6f6', zIndex: 1 }}
                     contentContainerStyle={{
                         alignItems: 'center',
-                        paddingTop: 220,
+                        paddingTop: 250,
                         paddingHorizontal: 20,
                         zIndex: 1
                     }}
@@ -146,456 +178,9 @@ export default SubView = ({route, navigation, props}) => {
                         [{ nativeEvent: { contentOffset: { y: offset } } }],
                         { useNativeDriver: false }
                 )}>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
-                    <Text>
-                        geargae
-                        getMySubRedditsgez
-                        rgez
-                        g
-                        ezg
-                        ege
-                        ge
-                        ge
-                        gergergzergegegeg
-                        ege
-                        gergergzergegegegezgegezge
-                        gergezgegegzegergezgezgezg
-                        gerzgerzgezgegezge
-                        gezgezgezgezgezgezrg
-                        gezgzegzegezgegerg
-                        egezgezgezgezgez
-                        gzegezgezrgezgege
-                        gezgezgezgezgezgezrgegezg
-                        gegezgezgezgzegegze
-                        gezgezgergezgergergergezrgege
-                        gezgezgezrgezrgerzgee
-
-                        
-                    </Text>
+                  <View style={{backgroundColor: '#f6f6f6'}}>
+                      <Text> Test test</Text>
+                  </View>
                 </ScrollView>
             </SafeAreaView>
         </SafeAreaProvider>

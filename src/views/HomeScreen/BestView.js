@@ -26,17 +26,17 @@ export default BestView = () => {
 
     const MyLoader = (props) => (
         <ContentLoader 
-            speed={2}
-            width={400}
-            height={460}
-            viewBox="0 0 400 460"
+            speed={.5}
+            width="97%"
+            height="100%"
+            viewBox="0 30 500 200"
             backgroundColor="#f3f3f3"
             foregroundColor="#ecebeb"
             {...props}
         >
             <Circle cx="17" cy="32" r="15" /> 
-            <Rect x="42" y="28" rx="2" ry="2" width="140" height="10" /> 
-            <Rect x="-4" y="54" rx="2" ry="2" width="400" height="150"/>
+            <Rect x="42" y="28" rx="2" ry="2" width="100%" height="10" /> 
+            <Rect x="-4" y="54" rx="2" ry="2" width="100%" height="100%"/>
         </ContentLoader>
     )
 
@@ -104,8 +104,8 @@ export default BestView = () => {
                     data={[{}, {}, {}, {}, {}, {}]}
                     renderItem={({item}) => {
                         return (
-                            <View style={{height: 210, backgroundColor: 'white', alignSelf: 'center', width: '100%', marginTop: 10}}>
-                                <MyLoader style={{alignSelf: 'center', width: '100%', top: -5}}/>
+                            <View style={{height: 210, backgroundColor: 'white', alignSelf: 'center', width: '100%', marginTop: 10, width: '97%', borderRadius: 4}}>
+                                <MyLoader style={{alignSelf: 'center', width: '97%', top: -5}}/>
                             </View>
                         )
                     }}

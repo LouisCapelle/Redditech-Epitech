@@ -14,7 +14,6 @@ export default SubView = ({route, navigation, props}) => {
     const subReddit = route.params.subReddit;
     const appContext = useContext(AppContext);
     const offset = useRef(new Animated.Value(0)).current;
-    const insets = useSafeAreaInsets();
     const [subRedditInfo, setSubRedditInfo] = useState({});
 
     React.useEffect(() => {

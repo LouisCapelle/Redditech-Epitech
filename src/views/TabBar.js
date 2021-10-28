@@ -4,7 +4,6 @@ import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 import Icon from 'react-native-vector-icons/Feather';
 import HomeScreen from './HomeScreen/index.js';
 import Profile from './Profile/index.js';
-import { useNavigation } from '@react-navigation/native';
 
 const Tabs = AnimatedTabBarNavigator();
 

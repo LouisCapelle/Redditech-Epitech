@@ -36,3 +36,7 @@ export const storeApiToken = async (apiToken) => {
 export const getApiToken = async () => {
     return SecureStore.getItemAsync("redditApiToken");
 }
+
+export const removeApiToken = async () => {
+    return SecureStore.removeItemAsync("redditApiToken");
+}

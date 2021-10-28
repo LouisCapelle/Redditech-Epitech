@@ -9,6 +9,7 @@ import {Modal} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import ImageViewer from 'react-native-image-zoom-viewer';
+import { useNavigation } from '@react-navigation/native';
 
 export default SubView = ({route, navigation, props}) => {
 

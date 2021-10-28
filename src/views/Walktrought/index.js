@@ -6,7 +6,7 @@ import { LottieViewConnection } from './Component/LottieViewConnection';
 import { ViewConnection } from './Component/ViewConnection';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, ResponseType, useAuthRequest } from 'expo-auth-session';
+import { makeRedirectUri, ResponseType, useAuthRequest, exchangeCodeAsync } from 'expo-auth-session';
 import styles from './index.styles';
 import Button from '../../components/Button';
 import AppContext from '../../services/Context';
@@ -34,11 +34,10 @@ export default WalkTrought = () => {
     const appContext = React.useContext(AppContext);
     const [request, response, promptAsync] = useAuthRequest(
         {
-            responseType: ResponseType.Token,
-            clientId: 'PAOv6RYOaKePE4QSCdhKaQ',
+            clientId: 'on-MLvVCkKeQH4zshyOYsg',
             scopes: ['identity', 'mysubreddits', 'read'],
             redirectUri: makeRedirectUri({
-                scheme: 'exp://t2-dfe.loucaplou.b-dev-501-bdx-5-1-redditech-maxime-demurger.exp.direct:80'
+                useProxy: true
             }),
         },
         discovery
@@ -76,18 +75,29 @@ export default WalkTrought = () => {
 
     React.useEffect(() => {
         if (response?.type === 'success') {
-            const { access_token } = response.params;
-            storeApiToken(access_token);
-            getUserConnected(access_token).then((user) => {
-                appContext.setApiToken(access_token);
-                appContext.setRedditUser(user);
-                appContext.getUserSubreddits(access_token);
-                navigation.navigate('TabBar')
-            }).catch((error) => {
-                console.log(error)
-                appContext.setApiToken(null);
-                appContext.setRedditUser(null);
-            });
+            const { code } = response.params;
+            const {access_token} = exchangeCodeAsync({
+                clientId: 'on-MLvVCkKeQH4zshyOYsg',
+                clientSecret: 'j4CDQiQm1foygvGGDlAVobMNGYin1Q',
+                code: code,
+                redirectUri: makeRedirectUri({
+                    useProxy: true
+                }),
+            }, {tokenEndpoint: "https://www.reddit.com/api/v1/access_token"}).then((response) => {
+                console.log(response)
+                const access_token = response.accessToken;
+                storeApiToken(access_token);
+                getUserConnected(access_token).then((user) => {
+                    appContext.setApiToken(access_token);
+                    appContext.setRedditUser(user);
+                    appContext.getUserSubreddits(access_token);
+                    navigation.navigate('TabBar')
+                }).catch((error) => {
+                    console.log(error)
+                    appContext.setApiToken(null);
+                    appContext.setRedditUser(null);
+                });
+            })
         }
     }, [response]);
 
@@ -135,7 +145,7 @@ export default WalkTrought = () => {
                 <ViewConnection Title={'Connexion'} description={access} width={width} isEnabled={appContext.darkMode}/>
             </Animated.View>
             <Animated.View style={[animatedStylesConnectionButton, { position: 'absolute', top: 430, alignItems: 'center', width: width }]}>
-                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => promptAsync()} disabled={!request}/>
+                <Button text="Se connecter avec Reddit" imageSource={require('../../../assets/reddit_button.png')} onPress={() => promptAsync({useProxy: true})} disabled={!request}/>
             </Animated.View>
             <View style={styles.bottomView}>
                 <Button text={(page === 1) ? 'Précédent' : 'Suivant'} onPress={() => functionStyle()}/>

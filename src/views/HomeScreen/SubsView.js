@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWi
 import { useContext } from 'react';
 import { AntDesign } from '@expo/vector-icons'; 
 import AppContext from '../../services/Context';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 
 export default SubsView = () => {
     const appContext = useContext(AppContext);

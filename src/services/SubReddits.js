@@ -56,7 +56,7 @@ export const getSubRedditPosts = (apiToken, subreddit_name) => {
 
 export const subcribeAction = (apiToken, subreddit_name, action) => {
     var details = {
-        'sr': subreddit_name,
+        'sr_name': subreddit_name,
         'action': action,
     };
     
@@ -67,6 +67,7 @@ export const subcribeAction = (apiToken, subreddit_name, action) => {
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
+    console.log(apiToken, formBody)
     return fetch('https://oauth.reddit.com/api/subscribe', {
         method: 'POST',
         headers: {
@@ -74,5 +75,5 @@ export const subcribeAction = (apiToken, subreddit_name, action) => {
             'Authorization': 'Bearer ' + apiToken
         },
         body: formBody
-    }).then((response) => response.text())
+    }).then((response) => response.json())
 }

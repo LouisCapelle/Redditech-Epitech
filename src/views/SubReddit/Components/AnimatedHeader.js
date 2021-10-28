@@ -58,7 +58,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
         console.log('subscribePress');
         const action = isSubscribed ? 'unsub' : 'sub';
         setIsSubscribed(!isSubscribed);
-        subcribeAction(appContext.redditApiToken, action, redditInfo.display_name_prefixed).then((response) => {
+        subcribeAction(appContext.redditApiToken, redditInfo.display_name_prefixed, action).then((response) => {
             console.log(response)
         })
     }
@@ -83,7 +83,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
                             <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
-                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 20, color: 'black', fontWeight: '700', marginTop: textPlace}}>
+                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 18, color: 'black', fontWeight: '700', marginTop: textPlace}}>
                                 {subRedditInfo.display_name_prefixed}
                             </Animated.Text>
                         </View>
@@ -108,7 +108,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
                             <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
-                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 20, color: 'black', fontWeight: '700', marginTop: textPlace}}>
+                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 18, color: 'black', fontWeight: '700', marginTop: textPlace}}>
                                 {subRedditInfo.display_name_prefixed}
                             </Animated.Text>
                         </View>

@@ -7,7 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 
 export default SubsView = () => {
     const appContext = useContext(AppContext);
+
     const navigation = useNavigation();
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            appContext.getUserSubreddits(appContext.redditApiToken);
+        });
+        return unsubscribe;
+    }, [navigation])
 
     const renderSubReddit = (subReddit) => {
         return (

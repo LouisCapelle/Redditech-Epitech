@@ -24,12 +24,10 @@ export default SubView = ({route, navigation, props}) => {
     React.useEffect(() => {
         getSubReddit(appContext.redditApiToken, subReddit.data.display_name)
         .then((data) => {
-            console.log(data)
             setSubRedditInfo(data.data)
         })
         getSubRedditPosts(appContext.redditApiToken, subReddit.data.display_name)
         .then((data) => {
-            console.log(data)
             setSubRedditPosts(data.data.children)
         })
     }, [])
@@ -99,8 +97,7 @@ export default SubView = ({route, navigation, props}) => {
                     style={{ flex: 1, backgroundColor: '#f6f6f6', zIndex: 1 }}
                     contentContainerStyle={{
                         alignItems: 'center',
-                        paddingTop: 250,
-                        paddingHorizontal: 20,
+                        paddingTop: 230,
                         zIndex: 1
                     }}
                     showsVerticalScrollIndicator={false}

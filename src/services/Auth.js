@@ -38,5 +38,5 @@ export const getApiToken = async () => {
 }
 
 export const removeApiToken = async () => {
-    return SecureStore.removeItemAsync("redditApiToken");
+    return SecureStore.deleteItemAsync("redditApiToken");
 }

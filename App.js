@@ -75,6 +75,7 @@ export default function App() {
               }} />
               <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerBackVisible: false, headerShown: false }} />
               <Stack.Screen name="SubView" component={SubView} options={{ headerBackVisible: true, headerShown: false }} />
+              <Stack.Screen name="OnBoard" component={Walktrought} options={{ headerBackVisible: false, headerShown: false, gestureEnabled: false}} />
             </Stack.Navigator>
           </NavigationContainer>
         </AppContext.Provider>

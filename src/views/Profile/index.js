@@ -28,10 +28,15 @@ export default Profile = () => {
                             <Text style={{textAlign: 'center', fontWeight: '300', marginTop: 5, color: (appContext.darkMode) ? "white" : "black"}}> {appContext.redditUser.subreddit.public_description}</Text>
                         </View>
                         <InformationsView/>
+                        <TouchableOpacity onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}>
+                            <Text>
+                                Disconnect
+                            </Text>
+                        </TouchableOpacity>
                     </>
                     :
                     <View>
-                        <TouchableOpacity onPress={() => {removeApiToken(); navigation.navigate('Walktrought')}}>
+                        <TouchableOpacity onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}>
                             <Text>
                                 Disconnect
                             </Text>

@@ -1,18 +1,18 @@
-import React, { useRef, useContext, useState } from 'react';
+import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, Animated, ScrollView, Image, ImageBackground, useWindowDimensions} from 'react-native';
 import BackButton from '../../../components/BackButton';
-import { getSubReddit } from '../../../services/SubReddits';
-import AppContext from '../../../services/Context';
-import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { AntDesign } from '@expo/vector-icons'; 
 import { JoinButton } from '../../../components/Button';
+import { subcribeAction } from '../../../services/SubReddits'; 
 
 const HEADER_HEIGHT = 230;
 
 export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
     const insets = useSafeAreaInsets();
     const subRedditInfo = redditInfo;
+    const [isSubscribed, setIsSubscribed] = React.useState(redditInfo.user_is_subscriber);
+    const appContext = React.useContext(AppContext);
 
     const headerHeight = offset.interpolate({
         inputRange: [0, HEADER_HEIGHT + insets.top],
@@ -34,7 +34,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
 
     const textPlace = offset.interpolate({
         inputRange: [0, 10],
-        outputRange: [10, 5],
+        outputRange: [10, -15],
         extrapolate: 'clamp'
     })
 
@@ -49,6 +49,19 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
         outputRange: [20, 0],
         extrapolate: 'clamp'
     })
+
+    React.useEffect(() => {
+        setIsSubscribed(redditInfo.user_is_subscriber);
+    }, [subRedditInfo])
+
+    const subscribePress = async () => {
+        console.log('subscribePress');
+        const action = isSubscribed ? 'unsub' : 'sub';
+        setIsSubscribed(!isSubscribed);
+        subcribeAction(appContext.redditApiToken, action, redditInfo.display_name_prefixed).then((response) => {
+            console.log(response)
+        })
+    }
 
     return (
         <Animated.View
@@ -74,7 +87,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
                                 {subRedditInfo.display_name_prefixed}
                             </Animated.Text>
                         </View>
-                        <JoinButton style={{width: '20%', marginRight: 20}}isSubscribed={subRedditInfo.user_is_subscriber}/>
+                        <JoinButton isSubscribed={isSubscribed} onPress={() => subscribePress()}/>
                     </View>
                     <View style={{flexDirection: 'row', width: '90%', alignSelf: 'center'}}>
                         <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: 'black', }}>
@@ -99,7 +112,7 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
                                 {subRedditInfo.display_name_prefixed}
                             </Animated.Text>
                         </View>
-                        <JoinButton style={{width: '20%', marginRight: 20}}isSubscribed={subRedditInfo.user_is_subscriber}/>
+                        <JoinButton isSubscribed={isSubscribed} onPress={() => subscribePress()}/>
                     </View>
                     <View style={{flexDirection: 'row', width: '90%', alignSelf: 'center'}}>
                         <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: 'black', }}>

@@ -25,7 +25,7 @@ export const JoinButton = ({isLoading, imageSource, imageStyle, text, isSubscrib
     const appContext = useContext(AppContext);
 
     return (
-        <TouchableOpacity style={[styles.join, {backgroundColor: (isSubscribed) ? 'white' : '#fa4505'}]} activeOpacity={.5}>
+        <TouchableOpacity style={[styles.join, {backgroundColor: (isSubscribed) ? 'white' : '#fa4505'}]} activeOpacity={.5} {...props}>
             {(!isSubscribed) && 
                 <AntDesign name="plus" size={15} color="white" />
             }

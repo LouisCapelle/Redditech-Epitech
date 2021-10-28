@@ -35,7 +35,7 @@ export default WalkTrought = () => {
     const [request, response, promptAsync] = useAuthRequest(
         {
             clientId: 'on-MLvVCkKeQH4zshyOYsg',
-            scopes: ['identity', 'mysubreddits', 'read'],
+            scopes: ['identity', 'mysubreddits', 'read', 'subscribe'],
             redirectUri: makeRedirectUri({
                 useProxy: true
             }),

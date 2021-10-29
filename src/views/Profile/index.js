@@ -6,9 +6,9 @@ import styles from './styles/index.styles';
 import InformationsView from './Components/Informations';
 import { removeApiToken } from '../../services/Auth';
 import { useNavigation } from '@react-navigation/native';
+import Button from '../../components/Button';
 
 export default Profile = () => {
-
     const appContext = useContext(AppContext);
     const navigation = useNavigation();
 
@@ -28,23 +28,16 @@ export default Profile = () => {
                             <Text style={{textAlign: 'center', fontWeight: '300', marginTop: 5, color: (appContext.darkMode) ? "white" : "black"}}> {appContext.redditUser.subreddit.public_description}</Text>
                         </View>
                         <InformationsView/>
-                        <TouchableOpacity onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}>
-                            <Text>
-                                Disconnect
-                            </Text>
-                        </TouchableOpacity>
+                        <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                            <Button text="Disconnect" onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}/>
+                        </View>
                     </>
                     :
-                    <View>
-                        <TouchableOpacity onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}>
-                            <Text>
-                                Disconnect
-                            </Text>
-                        </TouchableOpacity>
+                    <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                        <Button text="Disconnect" onPress={() => {removeApiToken(); navigation.navigate("OnBoard")}}/>
                     </View>
                 }
             </ScrollView>
         </SafeAreaView>
     );
 }
-

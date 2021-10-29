@@ -24,15 +24,14 @@ export default BestView = () => {
         })
     }, []);
 
-
     const MyLoader = (props) => (
         <ContentLoader 
             speed={.5}
             width="97%"
             height="100%"
             viewBox="0 30 500 200"
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
+            backgroundColor={appContext.darkMode ? '#15202b' : "#ececec"}
+            foregroundColor="#ececec"
             {...props}
         >
             <Circle cx="17" cy="32" r="15" /> 
@@ -48,7 +47,7 @@ export default BestView = () => {
                     data={[{}, {}, {}, {}, {}, {}]}
                     renderItem={({item}) => {
                         return (
-                            <View style={{height: 210, backgroundColor: 'white', alignSelf: 'center', width: '100%', marginTop: 10, width: '97%', borderRadius: 4}}>
+                            <View style={{height: 210, backgroundColor: appContext.darkMode ? 'black' : 'white', alignSelf: 'center', width: '100%', marginTop: 10, width: '97%', borderRadius: 4}}>
                                 <MyLoader style={{alignSelf: 'center', width: '97%', top: -5}}/>
                             </View>
                         )

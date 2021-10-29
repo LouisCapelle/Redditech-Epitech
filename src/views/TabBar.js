@@ -15,9 +15,6 @@ const TabBarIcon = props => {
                 size={props.size ? props.size : 24}
                 color={props.tintColor}
             />
-            {props.isBadge &&
-                <View style={{ backgroundColor: 'red', borderRadius: 100, height: 10, width: 10, left: -4, position: 'absolute', top: -4 }} />
-            }
         </View>
     )
 }
@@ -28,13 +25,13 @@ export default (props) => {
     return (
         <Tabs.Navigator initialRouteName="Home" tabBarOptions={{
             activeTintColor: "white",
-            inactiveTintColor: appContext.darkMode ? "black" : "grey",
+            inactiveTintColor: appContext.darkMode ? "white" : "black",
             activeBackgroundColor: "#fa4505",
             style: {
                 borderTopWidth: 1,
                 borderTopColor: 'black',
             },
-        }} appearance={{ tabBarBackground: appContext.darkMode ? 'grey' : 'white', topPadding: 10, bottomPadding: 5, dotCornerRadius: 17}} onN>
+        }} appearance={{ tabBarBackground: appContext.darkMode ? '#15202b' : 'white', topPadding: 10, bottomPadding: 5, dotCornerRadius: 17}}>
             <Tabs.Screen name="Accueil" component={HomeScreen} options={{
                     tabBarIcon: ({ focused, color, size }) => (
                         <TabBarIcon

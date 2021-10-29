@@ -74,27 +74,27 @@ export default AnimatedHeader = ({redditInfo, route, navigation, offset}) => {
                 height: headerHeight,
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
-                backgroundColor: 'white'
+                backgroundColor: appContext.darkMode ? 'black' : 'white'
             }}
         >
             {(subRedditInfo.banner_background_image) ?
                 <ImageBackground source={{uri: subRedditInfo.banner_background_image}} style={{width: '100%', height: '100%'}} imageStyle={{opacity: .2, resizeMode: 'cover'}} >
-                    <BackButton navigation={navigation} style={{marginTop: 50, marginLeft: 20}}/>
+                    <BackButton navigation={navigation} style={{marginTop: 50, marginLeft: 20 }} color={appContext.darkMode ? 'white' : 'black'}/>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <View style={{flexDirection: 'row'}}>
                             <Animated.Image source={{uri: (subRedditInfo.community_icon) ? subRedditInfo.community_icon : subRedditInfo.icon_img}} style={{height: imageSize, width: imageSize, borderRadius: 100, borderWidth: 3, marginLeft: 15, zIndex: 3, marginTop: imagePlace}}/>
-                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 18, color: 'black', fontWeight: '700', marginTop: textPlace}}>
+                            <Animated.Text style={{alignSelf: 'center', marginLeft: 5, fontSize: 18, color: appContext.darkMode ? 'white' : 'black', fontWeight: '700', marginTop: textPlace}}>
                                 {subRedditInfo.display_name_prefixed}
                             </Animated.Text>
                         </View>
                         <JoinButton isSubscribed={isSubscribed} onPress={() => subscribePress()}/>
                     </View>
                     <View style={{flexDirection: 'row', width: '90%', alignSelf: 'center'}}>
-                        <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: 'black', }}>
+                        <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '200', marginTop: textPlace, justifyContent: 'center', alignSelf: 'center', height: UsersHeight, color: appContext.darkMode ? 'white' : 'black'}}>
                             {subRedditInfo.subscribers} members - {subRedditInfo.active_user_count} users active
                         </Animated.Text>
                     </View>
-                    <Animated.Text style={{fontSize: 12, color: 'black', fontWeight: '400', marginTop: textPlace, height: textHeight, width: '90%', justifyContent: 'center', alignSelf: 'center'}}>
+                    <Animated.Text style={{fontSize: 12, color: appContext.darkMode ? 'white' : 'black', fontWeight: '400', marginTop: textPlace, height: textHeight, width: '90%', justifyContent: 'center', alignSelf: 'center'}}>
                         {subRedditInfo.public_description}
                     </Animated.Text>
                 </ImageBackground>

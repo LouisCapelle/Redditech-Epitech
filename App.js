@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [darkMode, setDarkMode] = React.useState(false);
+  const [darkMode, setDarkMode] = React.useState(true);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [redditApiToken, setRedditApiToken] = React.useState(null);
   const [redditUser, setRedditUser] = React.useState(null);

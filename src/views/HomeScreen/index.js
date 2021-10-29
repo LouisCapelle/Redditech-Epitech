@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions, Image } from 'react-native';
 import { useContext } from 'react';
-import Trendings from './Components/Trendings';
-import { ScrollView } from 'react-native-gesture-handler';
 import AppContext from '../../services/Context';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SubsView from './SubsView';
@@ -38,14 +36,14 @@ export default HomeScreen = () => {
             <View style={{width: '90%', flexDirection: 'row', alignSelf: 'center'}}>
                 <Image source={require('../../../assets/reddit_button.png')} style={{height: 35, width: 35, alignSelf: 'center', marginRight: 15}}></Image>
                 <TextField onFocus={() => setIndex(3)} iconName="search1" iconSize={18} iconColor="black" placeHolder="Rechercher" width={'100%'} />
-                <Ionicons name="settings-outline" size={35} color="black" style={{marginLeft: 10}}/>
+                <Ionicons name="settings-outline" size={35} color={appContext.darkMode ? "white" : 'black'} style={{marginLeft: 10}}/>
             </View>
         );
     }
 
     renderTabBar = (props) => (
         <TabBar {...props}  
-            style={{backgroundColor: appContext.darkMode ? "gray" : "white", height: 40}} 
+            style={{backgroundColor: appContext.darkMode ? "#15202b" : "white", height: 40}} 
             renderLabel={({ route, focused, color }) => (
                 <Text style={{color: appContext.darkMode ? "white" : "black", fontWeight: '500', fontSize: 14, top: -3}}>
                     {route.title}
@@ -57,7 +55,7 @@ export default HomeScreen = () => {
     );
 
     return (
-        <SafeAreaView style={{backgroundColor: appContext.darkMode ? "grey" : "#F6F6F6", height: '100%', width: '100%'}}>
+        <SafeAreaView style={{backgroundColor: appContext.darkMode ? "#15202b" : "#F6F6F6", height: '100%', width: '100%'}}>
             <Header />
             <TabView
                 navigationState={{ index, routes }}

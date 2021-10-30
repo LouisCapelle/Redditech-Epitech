@@ -13,7 +13,7 @@ export default Profile = () => {
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView style={{ backgroundColor: appContext.darkMode ? "#15202b" : "white", height: '100%' }}>
+        <SafeAreaView style={{ backgroundColor: appContext.darkMode ? "#15202b" : "#F6F6F6", height: '100%' }}>
             <DarkModeSwitcher />
             <ScrollView>
                 {(appContext.redditUser !== null) ?

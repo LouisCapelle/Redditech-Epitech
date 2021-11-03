@@ -60,7 +60,7 @@ export default Profile = () => {
                         <InformationsView/>
                         <View>
                             <Switcher text={'Allow private messages'} value={allowPMS} onValueChange={(value) => {setAllowPMS(value); onToggleChange()}}/>
-                            <Switcher text={'Allow people to follow you'} value={enable_followers} onValueChange={(value) => {setEnable_followers(value); onToggleChange()}} />
+                            <Switcher text={'Allow people to follow you'} value={enable_followers} onValueChange={(value) => {setEnableFollowers(value); onToggleChange()}} />
                             <Switcher text={'Enable chat requests'} value={email_chat_request} onValueChange={(value) => {setEmailChatRequest(value); onToggleChange()}}/>
                             <Switcher text={'Enable email messages'} value={email_private_message} onValueChange={(value) => {setEmailPrivateMessage(value); onToggleChange()}}/>
                             <Switcher text={'Hide revelants ads'} value={hide_ads} onValueChange={(value) => {setHideAds(value); onToggleChange()}}/>

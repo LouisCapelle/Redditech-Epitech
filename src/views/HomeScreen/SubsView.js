@@ -11,13 +11,14 @@ export default SubsView = ({route, navigation, props}) => {
     const appContext = useContext(AppContext);
     const [isFocused, setIsFocused] = useState(false);
     const [searchData, setSearchData] = useState([]);
+    const [search, setSearch] = useState('');
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             appContext.getUserSubreddits(appContext.redditApiToken);
         });
         return unsubscribe;
-    }, [navigation]);
+    }, []);
 
     const Header = () => {
         return (
@@ -78,12 +79,21 @@ export default SubsView = ({route, navigation, props}) => {
     return (
         <SafeAreaView style={{backgroundColor: appContext.darkMode ? "#15202b" : "#F6F6F6", height: '100%', width: '100%', alignItems: 'center'}}>
             <Header/>
-            <FlatList
-                data={isFocused ? searchData : appContext.userSubreddits}
-                renderItem={({item}) => isFocused ? renderSearch(item) : renderSubReddit(item)}
-                keyExtractor={(item, index) => index.toString()}
-                style={{width: '100%'}}
-            />
+            { (searchData.length === 0) ?
+                <FlatList
+                    data={appContext.userSubreddits}
+                    renderItem={({item}) => renderSubReddit(item)}
+                    keyExtractor={(item, index) => index.toString()}
+                    style={{width: '100%'}}
+                />
+                :
+                <FlatList
+                    data={searchData}
+                    renderItem={(item) => renderSearch(item)}
+                    keyExtractor={(item, index) => index.toString()}
+                    style={{width: '100%'}}
+                />
+            }
         </SafeAreaView>
     );
 }

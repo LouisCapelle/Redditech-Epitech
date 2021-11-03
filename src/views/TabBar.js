@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 import Icon from 'react-native-vector-icons/Feather';
 import HomeScreen from './HomeScreen/index.js';
+import SubsView from './HomeScreen/SubsView.js';
 import Profile from './Profile/index.js';
 
 const Tabs = AnimatedTabBarNavigator();
@@ -38,6 +39,16 @@ export default (props) => {
                             focused={focused}
                             tintColor={color}
                             name="home"
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen name="Search" component={SubsView} options={{
+                    tabBarIcon: ({ focused, color, size }) => (
+                        <TabBarIcon
+                            focused={focused}
+                            tintColor={color}
+                            name="search"
                         />
                     ),
                 }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, useWindowDimensions, Image, InteractionManager, TextInput} from 'react-native';
 import { useContext } from 'react';
 import AppContext from '../../services/Context';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
@@ -7,14 +7,9 @@ import SubsView from './SubsView';
 import PopularView from './PopularView';
 import BestView from './BestView';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'; 
+import { useNavigation } from '@react-navigation/native';
 import TextField from '../../components/TextField';
-
-const renderScene = SceneMap({
-    bestview: BestView,
-    popview: PopularView,
-    new: PopularView,
-    subs: SubsView,
-});
 
 export default HomeScreen = () => {
     const appContext = useContext(AppContext);
@@ -24,18 +19,25 @@ export default HomeScreen = () => {
         { key: 'bestview', title: 'Best' },
         { key: 'popview', title: 'Popular' },
         { key: 'new', title: 'New' },
-        { key: 'subs', title: 'Subs' },
     ]);
+    const navigation = useNavigation();
+
+    const renderScene = ({ route, jumpTo }) => {
+        switch (route.key) {
+            case 'bestview':
+                return <BestView />;
+            case 'popview':
+                return <PopularView />;
+            case 'new':
+                return <PopularView />;
+        }
+    };
 
     const Header = () => {
-        const myRefCurrent = () => {
-            setIndex(3)
-        }
-    
         return (
-            <View style={{width: '90%', flexDirection: 'row', alignSelf: 'center'}}>
+            <View style={{width: '90%', flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-between'}}>
                 <Image source={require('../../../assets/reddit_button.png')} style={{height: 35, width: 35, alignSelf: 'center', marginRight: 15}}></Image>
-                <TextField onFocus={() => setIndex(3)} iconName="search1" iconSize={18} iconColor="black" placeHolder="Rechercher" width={'100%'} />
+                <TextField onFocus={() => navigation.navigate('Search', {'from_homescreen': true})} iconName="search1" iconSize={18} iconColor="black" placeHolder="Rechercher" width={'100%'} />
                 <Ionicons name="settings-outline" size={35} color={appContext.darkMode ? "white" : 'black'} style={{marginLeft: 10}}/>
             </View>
         );
@@ -50,7 +52,7 @@ export default HomeScreen = () => {
                 </Text>
             )}
             indicatorStyle={{backgroundColor: '#fa4505', width: 60}}
-            indicatorContainerStyle={{marginLeft: (layout.width / (routes.length * 3) - 13)}}
+            indicatorContainerStyle={{marginLeft: (layout.width / (routes.length * 3) - 8)}}
         />
     );
 

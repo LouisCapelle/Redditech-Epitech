@@ -77,3 +77,26 @@ export const subcribeAction = (apiToken, subreddit_name, action) => {
         body: formBody
     }).then((response) => response.json())
 }
+
+export const searchRequest = (search, apiToken) => {
+    var details = {
+        'query': search,
+    };
+    
+    var formBody = [];
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log(apiToken, formBody)
+    return fetch('https://oauth.reddit.com/api/search_subreddits', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + apiToken
+        },
+        body: formBody
+    }).then((response) => response.json())
+}

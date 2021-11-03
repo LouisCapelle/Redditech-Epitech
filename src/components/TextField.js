@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 import {View, StyleSheet, TextInput} from 'react-native';
 import AppContext from '../services/Context';
 import { AntDesign } from '@expo/vector-icons'; 
-import { withDelay } from 'react-native-reanimated';
 
-export default TextField = ({iconColor, iconSize, iconStyle, iconName, placeHolder, width, ...props}) => {
+export default TextField = ({iconColor, iconSize, iconStyle, iconName, placeHolder, width, ref, ...props}) => {
 
     const appContext = useContext(AppContext);
 
     return (
         <View style={styles.view}>
-            <TextInput {...props} style={[styles.textField, {color: (appContext.darkMode) ? "white" : "black", width: (width) ? width : '80%'}]} placeholder={placeHolder}/>
+            <TextInput style={[styles.textField, {color: (appContext.darkMode) ? "white" : "black", width: (width) ? width : '80%'}]} placeholder={placeHolder} {...props}/>
             { (iconName) &&
                 <AntDesign name={iconName} size={iconSize} color={iconColor} style={[styles.icon]}/>
             }
